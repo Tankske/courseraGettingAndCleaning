@@ -30,6 +30,12 @@ The following files are available for the train and test data. Their description
 
 ##Overview of the variables
 
+The variables consist of the following:
+- Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration.
+- Triaxial Angular velocity from the gyroscope. 
+- A 561-feature vector with time and frequency domain variables. 
+- Its activity label. 
+- An identifier of the subject who carried out the experiment.
 
 ---
 
@@ -103,4 +109,3 @@ Calculate the average of each variable for each activity and each subject
 
 When performing this exercise the following lessons were learned:
 - It would be better to extract first the relevant measurements before storing data in a variable and merging multiple data sets. This would be more memory efficient.
-- ...
