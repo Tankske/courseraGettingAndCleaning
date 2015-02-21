@@ -4,8 +4,9 @@
 
 This document describes: 
 - the variables,
-- the data, and
-- any transformations or work performed to clean up the data.
+- the data,
+- any transformations or work performed to clean up the data, and
+- the result.
 
 ---
 
@@ -28,7 +29,7 @@ The following files are available for the train and test data. Their description
 
 ---
 
-##Overview of the variables
+##Overview of the variables in the input files
 
 The variables consist of the following:
 - Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration.
@@ -41,17 +42,20 @@ The variables consist of the following:
 
 ##Overview of work performed
 
-The sequence of the steps have been altered a little bit as this made it easier to prep the tidy dataset.
 The following steps have been performed to create the tidy dataset:
-1.  Merge the training and the test sets to create one data set.
-2.  Extract only the measurements on the mean and standard deviation for each measurement. 
-3.  Use descriptive activity names to name the activities in the data set
-4.  Appropriately label the data set with descriptive variable names. 
-5.  From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+- Merge the training and the test sets to create one data set.
+- Extract only the measurements on the mean and standard deviation for each measurement. 
+- Use descriptive activity names to name the activities in the data set
+- Appropriately label the data set with descriptive variable names. 
+- From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+The work has not been performed in the sequence mentioned above. Refer to the following section to see a detailed description of the work performed.
 
 ---
 
 ##Detailed work performed
+
+In what follows the work performed is described in detail. Refer to 'Run_analysis.R' for the script.
 
 ###1. Merge the training and the test sets to create one data set.
 Prepare the trainDataSet by uploading:
@@ -104,6 +108,9 @@ Calculate the average of each variable for each activity and each subject
 1. Create a melted data set so that each variable containing '-mean' or '-std' is expressed as a row
 2. Calculate the mean on the melted data set using the dcast function
 => dataset with all the means for each variable per activity per subject
+
+##The result
+The script 'Run_Analysis.R' creates a file called 'tidy_data.txt' which contains the means of each variable per subject per activity. The results contains a header row and 180 observastions (unique combinations Subject - ActivityLabel). Next to the variable Subject and ActivityLabel, the result contains 68 smartphone accelerometer-variables consisting of 33 means and 33 deviations.
 
 ##Lessons learned
 
