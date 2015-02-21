@@ -35,31 +35,38 @@ The following files are available for the train and test data. Their description
 
 ##Overview of work performed
 
+The sequence of the steps have been altered a little bit as this made it easier to prep the tidy dataset.
 The following steps have been performed to create the tidy dataset:
-1. Merge the training and the test sets to create one data set.
-2. Extract only the measurements on the mean and standard deviation for each measurement. 
-3. Use descriptive activity names to name the activities in the data set
-4. Appropriately label the data set with descriptive variable names. 
-5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+1.  Merge the training and the test sets to create one data set.
+2.  Extract only the measurements on the mean and standard deviation for each measurement. 
+3.  Use descriptive activity names to name the activities in the data set
+4.  Appropriately label the data set with descriptive variable names. 
+5.  From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
 ---
 
 ##Detailed work performed
 
 ###1. Merge the training and the test sets to create one data set.
-The following files have been uploaded and merged:
-- 'train/X_train.txt': Training set.
-- 'train/y_train.txt': Training labels.
-	=> Both files have been uploaded and joined together in order to link the labels to the data set. The result was stored in the variable 'LabeledTrainingSet'.
-- 'test/X_test.txt': Test set.
-- 'test/y_test.txt': Test labels.
-	=> Both files have been uploaded and joined together in order to link the labels to the data set. The result was stored in the variable 'LabeledTestSet'.
+Prepare the trainDataSet by uploading:
+1. The data set and add the variablenames
+2. subject & labels and adding them to the data set
+=> result is trainDataSet with names for all variables including the subjects & labels.
 
-Both the variable 'LabeledTrainingSet' and 'LabeledTestSet' are then merged together to have all data available in one data set.
+Prepare the testDataSet by uploading:
+1. The data set and add the variablenames
+2. Subject & activityId (labels) and adding them to the data set
+=> result is testDataSet with names for all variables including the subjects & labels.	
 
-###2. Extract only the measurements on the mean and standard deviation for each measurement. 
-Upload the file 'features.txt' into the data.frame features
-Filter out all the variables containing '-mean' or '-std' in a subset data.frame called filteredFeatures.
+Union the trainDataSet with testDataSet into the data.frame mergedDataSet
+
+###2. Replace the activity id's with activity labels
+1. Upload the activity labels and give the variables
+2. Merge the fullDataSet with the activity labels
+=> fullDataSet containing the labels of the activities
+
+###3. Extract only the measurements on the mean and standard deviation for each measurement. 
+The purpose is to filter out all the variables containing '-mean' or '-std' in a subset data.frame called filteredFeatures.
 eg.
 1 tBodyAcc-mean()-X
 2 tBodyAcc-mean()-Y
@@ -70,22 +77,27 @@ eg.
 7 tBodyAcc-mad()-X
 8 tBodyAcc-mad()-Y
 9 tBodyAcc-mad()-Z
- 
-The first column of the data.frame filteredFeatures was then converted into a vector called columnNumFeatures.
-columnNumFeatures should look like  [1,2,3,4,5,6, 41, 42, 43, ...]. 
 
-###3. Use descriptive activity names to name the activities in the data set
+should result in
+1 tBodyAcc-mean()-X
+2 tBodyAcc-mean()-Y
+3 tBodyAcc-mean()-Z
+4 tBodyAcc-std()-X
+5 tBodyAcc-std()-Y
+6 tBodyAcc-std()-Z
 
-Link the activity labels found in 'Activity_labels.txt' to the data. We've uploaded the data into the data.frame activityLabels
-This was done by replacing the index numbers of the column X with the corresponding values from the data.frame activityLabels.
-
-
-###4. Appropriately label the data set with descriptive variable names. 
-
-Use the filteredFeatures data.frame and convert the second variable containing the variable names into a vector and apply it to the dataset.
-
-###5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-
+Subset the dataset with only relevant variables
+1. Filter out all variables containing '-mean' or '-std' in their names as described above
+2. Create a vector containing the indexes of the relevant variables
+3. Make sure to include the index of the subject & activity labels variables
+4. Subset the dataset based on the index with vectors
+=> Sub setted dataset with only relevant variables containing '-mean' or '-std' including the subject & activity labels variables.
+	 
+###4. Creates an independent tidy data set with the average of each variable for each activity and each subject.
+Calculate the average of each variable for each activity and each subject
+1. Create a melted data set so that each variable containing '-mean' or '-std' is expressed as a row
+2. Calculate the mean on the melted data set using the dcast function
+=> dataset with all the means for each variable per activity per subject
 
 ##Lessons learned
 
